@@ -1,4 +1,18 @@
-<table>
+<div class="row barra-buscador" materialize>
+  <div class="input-field col s4">
+    <input id="filtroNombre" type="text" class="validate" [(ngModel)]="filtroNombre">
+    <label class="active" for="filtroNombre">Nombre</label>
+  </div>
+  <div class="input-field col s6">
+    <select materialize="material_select" name="zona" #zona="ngModel" [(ngModel)]="zona.cdzona">
+      <option value="0" selected>Todas</option>
+      <option *ngFor="let zona of zonas" value="{{zona.cdzona}}" >{{zona.dsnombre}}</option>
+    </select>
+    <label>Zona</label>
+  </div>
+  <button (click)="buscar()" class="btn grey darken-2 white-text">Buscar aves</button>
+</div>
+<table *ngIf="aves">
   <thead>
     <tr>
         <th>Nombre común</th>

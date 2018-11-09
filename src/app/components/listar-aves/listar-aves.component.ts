@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Ave } from '../../models/ave';
 import { Pais } from '../../models/pais';
+import { Zona } from '../../models/zona';
 import { AveService } from '../../services/ave.service';
 import { PaisService } from '../../services/pais.service';
+import { ZonaService } from '../../services/zona.service';
 
 @Component({
   selector: 'app-listar-aves',
@@ -15,17 +17,23 @@ export class ListarAvesComponent implements OnInit {
   public ave: Ave;
   public paises: Pais[];
   public pais: Pais;
+  public filtroNombre: string;
+  public zonas: Zona[];
+  public zona: Zona;
 
   constructor(
     private _aveService: AveService,
-    private _paisService: PaisService
+    private _paisService: PaisService,
+    private _zonaService: ZonaService
   ) {
     this.ave = new Ave(0, '', '', []);
     this.pais = new Pais(0, '', 0);
+    this.zona = new Zona(0, '');
+    this.filtroNombre = '';
   }
 
   ngOnInit() {
-    this.getAves();
+    this.getZonas();
     this.getPaises();
   }
 
@@ -84,6 +92,24 @@ export class ListarAvesComponent implements OnInit {
         console.log(<any>error);
       }
     );
+  }
+
+  getZonas () {
+    this._zonaService.getAllZonas().subscribe(
+      response => {
+        if (response) {
+          console.log(response);
+          this.zonas = response;
+        }
+      },
+      error => {
+        console.log(<any>error);
+      }
+    );
+  }
+
+  buscar() {
+    this.getAves();
   }
 
   onSubmit(form) {
