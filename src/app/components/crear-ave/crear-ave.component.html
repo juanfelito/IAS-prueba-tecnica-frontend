@@ -1,0 +1,34 @@
+<!-- Modal Trigger -->
+<button data-target="modal1" class="waves-effect waves-light btn btn-large modal-trigger blue darken-4">Crear ave</button>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]">
+  <form #createAveForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="modal-content">
+      <h4>Crear nueva ave</h4>
+      <div class="row" materialize>
+        <div class="input-field col s6">
+          <input id="nombreComun" type="text" class="validate" name="nombreComun" #nombreComun="ngModel"   [(ngModel)]="ave.dsnombre_comun">
+          <label class="active" for="nombreComun">Nombre común</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="nombreCientifico" type="text" class="validate" name="nombreCientifico" #nombreCientifico="ngModel" [(ngModel)]="ave.dsnombre_cientifico">
+          <label class="active" for="nombreCientifico">Nombre científico</label>
+        </div>
+      </div>
+      <div class="row">
+          <div class="input-field col s6">
+            <select materialize="material_select" name="cdpais" #cdpais="ngModel" [(ngModel)]="pais.cdpais">
+              <option value="" disabled selected>Elegir país</option>
+              <option *ngFor="let pais of paises" value="{{pais.cdpais}}">{{pais.dsnombre}}</option>
+            </select>
+            <label>País</label>
+          </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <input type="submit" value="Crear" class="waves-effect waves-light btn blue darken-4" [disabled]="!createAveForm.form.valid">
+      <input type="button" value="Cerrar" class="modal-close waves-effect waves-light btn red darken-4">
+    </div>
+  </form>
+</div>

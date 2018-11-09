@@ -1,0 +1,52 @@
+<table>
+  <thead>
+    <tr>
+        <th>Nombre común</th>
+        <th>Nombre científico</th>
+        <th>País</th>
+        <th>Opciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let ave of aves">
+      <td>{{ave.dsnombre_comun}}</td>
+      <td>{{ave.dsnombre_cientifico}}</td>
+      <td>{{ave.pais[0].dsnombre}}</td>
+      <td>
+        <a  class="waves-effect waves-light btn yellow darken-4 modal-trigger" (click)="updateModal(ave.cdave)" data-target="modalActualizar" href="#modalActualizar">Actualizar</a>
+        <input type="button" value="Borrar" class="waves-effect waves-light btn red darken-4" (click)="deleteAve(ave.cdave)">
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div id="modalActualizar" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]">
+  <form #updateAveForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="modal-content">
+      <h4>Modificar ave</h4>
+      <div class="row" materialize>
+        <div class="input-field col s6">
+          <input id="nombreComun" type="text" class="validate" name="nombreComun" #nombreComun="ngModel"   [(ngModel)]="ave.dsnombre_comun">
+          <label class="active" for="nombreComun">Nombre común</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="nombreCientifico" type="text" class="validate" name="nombreCientifico" #nombreCientifico="ngModel" [(ngModel)]="ave.dsnombre_cientifico">
+          <label class="active" for="nombreCientifico">Nombre científico</label>
+        </div>
+      </div>
+      <div class="row">
+          <div class="input-field col s6">
+            <select materialize="material_select" name="cdpais" #cdpais="ngModel" [(ngModel)]="pais.cdpais">
+              <option *ngFor="let pais of paises" value="{{pais.cdpais}}" [selected]="pais.cdpais == ave.pais[0].cdpais">{{pais.dsnombre}}</option>
+            </select>
+            <label>País</label>
+          </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <input type="submit" value="Modificar" class="waves-effect waves-light btn blue darken-4" [disabled]="!updateAveForm.form.valid">
+      <input type="button" value="Cerrar" class="modal-close waves-effect waves-light btn red darken-4">
+    </div>
+  </form>
+</div>
